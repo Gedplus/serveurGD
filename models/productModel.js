@@ -3,6 +3,11 @@ const mongoose = require("mongoose"); // Erase if already required
 // Declare the Schema of the Mongo model
 var productSchema = new mongoose.Schema(
   {
+    codeArt: {
+      type: String,
+
+
+    },
     title: {
       type: String,
       required: true,
