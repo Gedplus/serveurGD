@@ -27,20 +27,20 @@ router.get("/getYearlyTotalOrders",  authMiddleware, getYearlyTotalOrders) ;
 router.get("/wishlist",authMiddleware, getWishlist);
 router.get("/all-users", getallUser);
  router.get("/getmyorders", authMiddleware, getMyOrders);
-/*router.get("/getallorders", authMiddleware, isAdmin, getAllOrders);
-router.post("/getorderbyuser/:id", authMiddleware, isAdmin, getOrderByUserId); */ 
+router.get("/getallorders", authMiddleware, isAdmin, getAllOrders);
+router.post("/getorderbyuser/:id", authMiddleware, isAdmin, getOrderByUserId); 
 router.get("/refresh", handleRefreshToken);
 router.get("/logout", logout);
 
 router.get("/:id", authMiddleware , isAdmin   ,getaUser);
 
 router.delete("/:id", deleteaUser);
-/*router.put(
+router.put(
     "/order/update-order/:id",
     authMiddleware,
     isAdmin,
     updateOrderStatus
-  ); */
+  ); 
 router.put("/edit-user",authMiddleware, updatedUser);
 router.put("/Save-address",authMiddleware, saveAddress);
 router.put("/block-user/:id", authMiddleware, isAdmin, blockUser);

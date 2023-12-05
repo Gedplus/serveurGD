@@ -562,6 +562,49 @@ const updateOrderStatus = asyncHandler(async (req, res) => {
   }
 });
 */
+const getOrderByUserId = asyncHandler(async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const userorders = await Order.findOne({ _id: id })
+      .populate("orderItems.product")
+      .populate("user")
+      .populate("orderItems.color").exec()
+    res.json(userorders);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+const getAllOrders = asyncHandler(async (req, res) => {
+  try {
+
+
+      const orders = await Order.find().populate("user").populate("orderItems.product").populate("orderItems.color").exec();
+    res.json(orders);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
+const updateOrderStatus = asyncHandler(async (req, res) => {
+  const { status } = req.body;
+  const { id } = req.params;
+  validateMongoDbId(id);
+  try {
+    const updateOrderStatus = await Order.findByIdAndUpdate(
+      id,
+      {
+        orderStatus: status,
+        paymentIntent: {
+          status: status,
+        },
+      },
+      { new: true }
+    );
+    res.json(updateOrderStatus);
+  } catch (error) {
+    throw new Error(error);
+  }
+});
 const createOrder = asyncHandler (async(req, res) =>{
   const {shippingInfo,orderItems,totalPrice,totalPriceAfterDiscount,payementInfo} =req.body;
   const {_id} = req.user;
@@ -716,4 +759,4 @@ const getMonthWiseOrderCount = asyncHandler(async (req , res ) => {
   res.json(data)
   })
 
-  module.exports = {createUser ,loginUserCtrl,getallUser,getaUser , getYearlyTotalOrders, deleteaUser ,updatedUser ,unblockUser ,blockUser , handleRefreshToken , logout , updatePassword , forgotPasswordToken , resetPassword , loginAdmin , getWishlist , saveAddress , userCart , getUserCart , emptyCart , applyCoupon ,  removeProductFromCart ,createOrder,updateProductQuantityFromCart ,getMyOrders ,getMonthWiseOrderIncome , getMonthWiseOrderCount};
+  module.exports = {createUser ,loginUserCtrl,getallUser,getaUser,getOrderByUserId ,getAllOrders,updateOrderStatus, getYearlyTotalOrders, deleteaUser ,updatedUser ,unblockUser ,blockUser , handleRefreshToken , logout , updatePassword , forgotPasswordToken , resetPassword , loginAdmin , getWishlist , saveAddress , userCart , getUserCart , emptyCart , applyCoupon ,  removeProductFromCart ,createOrder,updateProductQuantityFromCart ,getMyOrders ,getMonthWiseOrderIncome , getMonthWiseOrderCount};
