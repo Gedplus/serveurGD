@@ -1,3 +1,5 @@
+
+
 const Product = require("../models/productModel")
 const User = require("../models/userModel");
 const asyncHandler =require("express-async-handler")
@@ -81,16 +83,21 @@ const createProduct = asyncHandler(async (req, res) => {
   const updateProduct = asyncHandler(async (req, res) => {
     const id = req.params;
 console.log(id)
-    try {
-      const updateProduct = await Product.findOneAndUpdate( { codeArt: id.id }, req.body, {
-        new: true,
-      });
-      console.log(updateProduct)
-      res.json(updateProduct);
-    } catch (error) {
-      throw new Error(error);
-    }
+let product = req.body;
+
+  const productedit = await Product.find({codeArt: id.id});
+  console.log(productedit[0].quantity )
+  try{
+    await Product.updateOne({codeArt: id.id},{ $set: {quantity: productedit[0].quantity - product.quantity}});
+    res.status(201).json(updateProduct);
+} catch (error){
+  res.status(409).json({ message: error.message});     
+}
+  
   });
+
+
+
   const deleteProduct = asyncHandler(async (req, res) => {
     const id = req.params;
     validateMongoDbId(id);
