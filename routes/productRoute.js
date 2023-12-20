@@ -17,7 +17,7 @@ router.put(
 uploadImages
   );
   
-router.put("/:id", authMiddleware, isAdmin , updateProduct);
+router.put("/:id", updateProduct);
 router.delete("/:id", authMiddleware ,isAdmin , deleteProduct);
 router.delete("/delete-img/:id", authMiddleware, isAdmin, deleteImages);
 router.get("/",getAllProduct);
