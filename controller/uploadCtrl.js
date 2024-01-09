@@ -23,7 +23,7 @@ const uploadImages = asyncHandler(async (req, res) => {
     res.json(images);
   } catch (error) {
     throw new Error(error);
-  }
+  } 
 });
 const deleteImages = asyncHandler(async (req, res) => {
   const { id } = req.params;
