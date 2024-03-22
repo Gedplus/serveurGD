@@ -95,6 +95,21 @@ let product = req.body;
 }
   
   });
+  const updateProductqty = asyncHandler(async (req, res) => {
+    const id = req.params;
+console.log(id)
+let product = req.body;
+
+  const productedit = await Product.find({codeArt: id.id});
+  console.log(productedit[0].quantity )
+  try{
+    await Product.updateOne({codeArt: id.id},{ $set: {quantity: productedit[0].quantity + product.quantity}});
+    res.status(201).json(updateProduct);
+} catch (error){
+  res.status(409).json({ message: error.message});     
+}
+  
+  });
 
 
 
@@ -241,4 +256,4 @@ const deleteImages = asyncHandler(async (req, res) => {
 });
 
 
-  module.exports = {createProduct , getaProduct , getAllProduct , updateProduct , deleteProduct , addToWishlist , rating , uploadImages , deleteImages}
+  module.exports = {createProduct , getaProduct , getAllProduct , updateProduct , deleteProduct , addToWishlist , rating , uploadImages , deleteImages ,updateProductqty}
