@@ -343,7 +343,7 @@ const saveAddress = asyncHandler(async (req, res, next) => {
 
 
 const userCart = asyncHandler(async (req, res) => {
-  const { productId , color , quantity , price } = req.body;
+  const { productId , quantity , price } = req.body;
   const { _id } = req.user;
   validateMongoDbId(_id);
   try {
@@ -351,7 +351,7 @@ const userCart = asyncHandler(async (req, res) => {
     let newCart = await new Cart({
       userId : _id,
       productId,
-color, 
+
 price ,
  quantity
     }).save();
@@ -368,7 +368,7 @@ const getUserCart = asyncHandler(async (req, res) => {
   try {
     const cart = await Cart.find({ userId: _id }).populate(
       "productId"
-    ).populate("color"); 
+    )
     console.log(cart)
     res.json(cart);
   } catch (error) {
@@ -569,7 +569,7 @@ const getOrderByUserId = asyncHandler(async (req, res) => {
     const userorders = await Order.findOne({ _id: id })
       .populate("orderItems.product")
       .populate("user")
-      .populate("orderItems.color").exec()
+ .exec()
     res.json(userorders);
   } catch (error) {
     throw new Error(error);
@@ -579,7 +579,7 @@ const getAllOrders = asyncHandler(async (req, res) => {
   try {
 
 
-      const orders = await Order.find().populate("user").populate("orderItems.product").populate("orderItems.color").exec();
+      const orders = await Order.find().populate("user").populate("orderItems.product").exec();
     res.json(orders);
   } catch (error) {
     throw new Error(error);
@@ -625,7 +625,7 @@ const createOrder = asyncHandler (async(req, res) =>{
 const getMyOrders = asyncHandler(async (req, res) => {
   const {_id} = req.user;
   try {
-    const orders = await Order.find({user:_id}).populate("user").populate("orderItems.product").populate("orderItems.color")
+    const orders = await Order.find({user:_id}).populate("user").populate("orderItems.product")
     res.json({orders})
   }catch(error){
     throw new Error(error)

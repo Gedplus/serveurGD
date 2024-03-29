@@ -57,6 +57,14 @@ const createBlog = asyncHandler(async (req, res) => {
       throw new Error(error);
     }
   });
+  const getAllBlogsCat = asyncHandler(async (req, res) => {
+    try {
+      const getBlogs = await Blog.find({ category: req.params.id});
+      res.json(getBlogs);
+    } catch (error) {
+      throw new Error(error);
+    }
+  });
   const deleteBlog = asyncHandler(async (req, res) => {
     const { id } = req.params;
     validateMongoDbId(id);
@@ -190,4 +198,4 @@ const createBlog = asyncHandler(async (req, res) => {
     }
     
     })
-  module.exports ={createBlog , updateBlog , getBlog  , getAllBlogs , deleteBlog , liketheBlog ,disliketheBlog , uploadImages} ; 
+  module.exports ={createBlog , updateBlog , getBlog  , getAllBlogs , deleteBlog , liketheBlog ,disliketheBlog , uploadImages , getAllBlogsCat} ; 
