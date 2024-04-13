@@ -22,7 +22,7 @@ dbConnect();
 app.use(morgan("dev"))
 app.use(cors())
 
-app.use(express.json({limit: '50mb'}));
+app.use(express.json({limit: '100mb'}));
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(cookieParser())
 app.use("/api/user", authRouter)
